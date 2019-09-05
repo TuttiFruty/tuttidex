@@ -3,16 +3,11 @@ package edu.pokemon.iut.tuttidex.ui.pokemonlist
 
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
-import androidx.appcompat.widget.SearchView
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
 import edu.pokemon.iut.tuttidex.R
-import edu.pokemon.iut.tuttidex.databinding.FragmentPokemonListBinding
 import edu.pokemon.iut.tuttidex.ui.model.Pokemon
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,7 +16,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  */
 class PokemonListFragment : Fragment() {
-    private lateinit var binding: FragmentPokemonListBinding
+    //TODO 2 Declare une var(iable) privee qui sera init(ialiser) plus tard(late) du type FragmentPokemonListBinding
+
     val viewModel: PokemonListViewModel by viewModel()
 
     private var maxId: Int = 0
@@ -30,19 +26,23 @@ class PokemonListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_pokemon_list,
-            container,
-            false
-        )
+        //TODO 3 initialise la variable cree avec :
+        // le LayoutInflater en parametre de onCreateView
+        // le R.layout du fichier XML
+        // le ViewGroup en parametre de onCreateView
+        // on ne l'attache pas au parent
 
-        val adapter = PokemonsAdapter(viewModel)
-        binding.rvPokemonList.adapter = adapter
-        binding.rvPokemonList.layoutManager = LinearLayoutManager(context)
+        //TODO 4 instancie un PokemonsAdapter en lui passant la val(eur) viewModel et stocke l'instance dans une autre val(eur)
+
+        //TODO 5 utilise la variable de type FragmentPokemonListBinding pour acceder à ta RecyclerView
+        // initialise son attribut adapter
+
+        //TODO 6 utilise la variable de type FragmentPokemonListBinding pour acceder à ta RecyclerView
+        // initialise son attribut layoutManager
+
         viewModel.pokemons.observe(viewLifecycleOwner, Observer<List<Pokemon>> { pokemons ->
             pokemons?.apply {
-                adapter.submitList(pokemons)
+                //TODO 7 utilise la valeur de type PokemonsAdapter pour envoyer la liste des pokemons à la RecyclerView
             }
         })
 
@@ -51,74 +51,14 @@ class PokemonListFragment : Fragment() {
         })
 
         setHasOptionsMenu(true)
-        // Inflate the layout for this fragment
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (viewModel.lastPokemonIdViewed in 1 until maxId) {
-            binding.rvPokemonList.scrollToPosition(viewModel.lastPokemonIdViewed)
-        }
-
-        if(viewModel.lastSearch.isNotBlank()){
-            viewModel.search(viewModel.lastSearch)
-        }
+        // TODO 8 renvoie l'attribut root de ta variable de type FragmentPokemonListBinding à la place de null
+        // (même si il y a un message d'erreur le .root existe est devrais fonctionner)
+        return null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.overflow_menu, menu)
-
-        initSearch(menu)
-
-        initFilter(menu)
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun initFilter(menu: Menu) {
-        val filterItem = menu.findItem(R.id.filterByCaptured)
-        val filterView = filterItem.actionView as CheckBox
-        viewModel.pokemonFilter.observe(this, Observer {
-            filterView.isChecked = it.filterCaptured
-            if (it.filterCaptured) {
-                closeSearch(menu)
-            }
-        })
-        filterView.setOnCheckedChangeListener { _, isChecked -> viewModel.onFilterByCaptured(isChecked) }
-    }
-
-    private fun closeSearch(menu: Menu) {
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        if (searchItem.isActionViewExpanded) {
-            searchItem.collapseActionView()
-            searchView.setQuery("", false)
-        }
-    }
-
-    private fun initSearch(menu: Menu) {
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        val filter = viewModel.pokemonFilter.value
-
-        if (filter != null && filter.searchQuery.isNotBlank()) {
-            searchItem.expandActionView()
-            searchView.setQuery(filter.searchQuery, true)
-        }
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.search(query ?: "")
-                return false
-
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.search(newText ?: "")
-                return false
-            }
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

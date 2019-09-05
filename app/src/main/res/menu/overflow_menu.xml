@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_search"
-          android:icon="@drawable/ic_search_24dp"
-          android:title="@string/search_hint"
-          app:actionViewClass="androidx.appcompat.widget.SearchView"
-          app:showAsAction="ifRoom|collapseActionView" />
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/aboutFragment"
-            android:title="@string/about" />
-
-    <item android:id="@+id/filterByCaptured"
-          android:checkable="true"
-          android:icon="@drawable/ic_pokeball_empty"
-          android:title="@string/filter_captured"
-          app:actionViewClass="android.widget.CheckBox"
-          app:showAsAction="ifRoom"
-    />
+        android:id="@+id/aboutFragment"
+        android:title="@string/about" />
 </menu>

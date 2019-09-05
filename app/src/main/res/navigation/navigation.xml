@@ -9,17 +9,6 @@
               android:name="edu.pokemon.iut.tuttidex.ui.pokemonlist.PokemonListFragment"
               android:label="@string/app_name"
               tools:layout="@layout/fragment_pokemon_list">
-        <action android:id="@+id/action_pokemonListFragment_to_pokemonDetailFragment"
-                app:destination="@id/pokemonDetailFragment" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"/>
-    </fragment>
-
-    <fragment android:id="@+id/pokemonDetailFragment"
-              android:name="edu.pokemon.iut.tuttidex.ui.pokemondetail.PokemonDetailFragment"
-              android:label="@string/pokemon_detail"
-              tools:layout="@layout/fragment_pokemon_detail">
-        <argument android:name="pokemonId"
-                  app:argType="integer"/>
     </fragment>
 
     <fragment android:id="@+id/aboutFragment"
@@ -27,8 +16,4 @@
               android:label="@string/about"
               tools:layout="@layout/fragment_about"/>
 
-    <fragment android:id="@+id/pokemonCreateFragment"
-              android:name="edu.pokemon.iut.tuttidex.ui.pokemoncreate.PokemonCreateFragment"
-              android:label="@string/create_pokemon"
-              tools:layout="@layout/fragment_pokemon_create"/>
 </navigation>
