@@ -3,8 +3,6 @@ package edu.pokemon.iut.tuttidex.ui.pokemonlist
 
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
-import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -70,56 +68,9 @@ class PokemonListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.overflow_menu, menu)
 
-        initSearch(menu)
-
-        initFilter(menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun initFilter(menu: Menu) {
-        val filterItem = menu.findItem(R.id.filterByCaptured)
-        val filterView = filterItem.actionView as CheckBox
-        viewModel.pokemonFilter.observe(this, Observer {
-            filterView.isChecked = it.filterCaptured
-            if (it.filterCaptured) {
-                closeSearch(menu)
-            }
-        })
-        filterView.setOnCheckedChangeListener { _, isChecked -> viewModel.onFilterByCaptured(isChecked) }
-    }
-
-    private fun closeSearch(menu: Menu) {
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        if (searchItem.isActionViewExpanded) {
-            searchItem.collapseActionView()
-            searchView.setQuery("", false)
-        }
-    }
-
-    private fun initSearch(menu: Menu) {
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        val filter = viewModel.pokemonFilter.value
-
-        if (filter != null && filter.searchQuery.isNotBlank()) {
-            searchItem.expandActionView()
-            searchView.setQuery(filter.searchQuery, true)
-        }
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.search(query ?: "")
-                return false
-
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.search(newText ?: "")
-                return false
-            }
-        })
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = view?.findNavController()

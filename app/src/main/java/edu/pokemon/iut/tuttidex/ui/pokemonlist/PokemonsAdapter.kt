@@ -1,8 +1,5 @@
 package edu.pokemon.iut.tuttidex.ui.pokemonlist
 
-import android.widget.ImageView
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import edu.pokemon.iut.tuttidex.R
 import edu.pokemon.iut.tuttidex.common.recyclerview.DataBindingAdapter
@@ -27,10 +24,8 @@ class PokemonsAdapter(viewModel: PokemonListViewModel?) : DataBindingAdapter<Pok
         super.onBindViewHolder(holder, position)
         holder.itemView.setOnClickListener {
             viewModel?.onPokemonClicked(getItem(holder.adapterPosition))
-            val extras = FragmentNavigatorExtras(
-                holder.itemView.findViewById<ImageView>(R.id.iv_pokemon_logo)
-                        to holder.itemView.context.getString(R.string.pokemon_logo_transition))
-            it.findNavController().navigate(PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(getItem(holder.adapterPosition).number),extras)
+            //TODO 3) Ajouter un appel au NavController pour "naviguer" vers le PokemonDetailFragment
+            // Le fragment attends l'id du pokemon que l'on veut en entrée
         }
     }
 

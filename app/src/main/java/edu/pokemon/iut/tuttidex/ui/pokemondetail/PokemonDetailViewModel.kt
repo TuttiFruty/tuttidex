@@ -9,7 +9,6 @@ import edu.pokemon.iut.tuttidex.ui.model.asUI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 class PokemonDetailViewModel(pokemonId: Int, private val pokemonRepository: PokemonRepository) : ViewModel() {
     private var pokemon: LiveData<Pokemon?> = Transformations.map(pokemonRepository.getPokemon(pokemonId)){
@@ -59,11 +58,5 @@ class PokemonDetailViewModel(pokemonId: Int, private val pokemonRepository: Poke
     override fun onCleared() {
         super.onCleared()
         job.cancel()
-    }
-
-    fun onCaptured() {
-        uiScope.launch {
-            pokemonRepository.capturePokemon(pokemon.value?.number)
-        }
     }
 }
