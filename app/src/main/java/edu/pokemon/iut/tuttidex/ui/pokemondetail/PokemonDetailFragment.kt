@@ -5,7 +5,10 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -60,7 +63,7 @@ class PokemonDetailFragment : Fragment() {
             loadTypes(types)
         })
 
-        setHasOptionsMenu(true)
+        //TODO 17) Vous allez faire comme pour le PokemonListFragment et setter les optionsMenu à vrai pour ce fragment
 
         return binding.root
     }
@@ -92,24 +95,17 @@ class PokemonDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.pokemon_detail_menu, menu)
-        val activity = activity
-        if (activity != null && null == getSharedIntent().resolveActivity(activity.packageManager)) {
-            menu.findItem(R.id.share)?.isVisible = false
-        }
-    }
+    //TODO 18) On recommence avec l'override de la methode pour "gonfler/inflate le menu"
+    // Cette fois-ci c'est pokemon_detail_menu.xml que l'on "gonfle"
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.share -> shareSuccess()
-        }
+    //TODO 19) Dans onOptionsItemSelected android nous indique en parametre quelle bouton du menu a été clique
+    // on vérifie l'itemId de l'item et si il est égale à celui de "share" cf l'id du menu.xml on appel shareSuccess()
         return super.onOptionsItemSelected(item)
     }
 
     private fun shareSuccess() {
-        startActivity(getSharedIntent())
+        //TODO 20) Lancer une activity en passant en parametre getSharedIntent()
     }
 
     private fun getSharedIntent(): Intent {
