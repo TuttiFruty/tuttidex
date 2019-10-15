@@ -79,6 +79,9 @@ class PokemonListFragment : Fragment() {
     private fun initFilter(menu: Menu) {
         val filterItem = menu.findItem(R.id.filterByCaptured)
         val filterView = filterItem.actionView as CheckBox
+        filterView.setButtonDrawable(R.drawable.pokemon_ball_selector)
+
+
         viewModel.pokemonFilter.observe(this, Observer {
             filterView.isChecked = it.filterCaptured
             if (it.filterCaptured) {

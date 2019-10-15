@@ -12,7 +12,7 @@
 
     <item android:id="@+id/filterByCaptured"
           android:checkable="true"
-          android:icon="@drawable/ic_pokeball_empty"
+          android:button="@drawable/pokemon_ball_selector"
           android:title="@string/filter_captured"
           app:actionViewClass="android.widget.CheckBox"
           app:showAsAction="ifRoom"
